@@ -34,4 +34,14 @@ There are several examples of the architecture in Airflow's own [documentation](
 
 ## Cloud Architecture Propositions
 
-Sticking to the Docker Compose approach, we could set auto scaling groups tied to ECS in order to scale parts of the infrastructure 
+Sticking to the Docker Compose approach, we could set auto scaling groups tied to ECS in order to scale parts of the infrastructure. Only the workers need to be scaled up, so I belive we could simply implement them as an ASG:
+
+![aws_airflow_asg](./assets/aws_airflow_asg.drawio.png)
+
+I've placed a Load balancer up front, considering that there could be more than just airflow running in that infrastructure. I did not consider a Redis alternative in this example, but one would be needed in order to scale out to a larger size, but that would entail additional cost if integrated with AWS native tools such as ElastiCache. The relational database would be better integrated and more reliable as an RDS.
+
+A more elegant solution would involve an EKS managed cluster that would essentially deploy all of the required containers as pods in it:
+
+![aws_airflow_eks](./assets/aws_airflow_eks.drawio.png)
+
+In this example, I believe the DAGs should be located in a Git repository (third party, in this case, such as GitHub or GitLab) to facilitate collaboration from DAG authors. Instead of using ElastiCache, I think running it in a container would prove cheaper, though maybe not as scalable. As with the ASG example, I believe only the workers need scaling at first, but other components can be scaled up and down easily with Kubernetes.
