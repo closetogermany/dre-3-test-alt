@@ -45,3 +45,5 @@ A more elegant solution would involve an EKS managed cluster that would essentia
 ![aws_airflow_eks](./assets/aws_airflow_eks.drawio.png)
 
 In this example, I believe the DAGs should be located in a Git repository (third party, in this case, such as GitHub or GitLab) to facilitate collaboration from DAG authors. Instead of using ElastiCache, I think running it in a container would prove cheaper, though maybe not as scalable. As with the ASG example, I believe only the workers need scaling at first, but other components can be scaled up and down easily with Kubernetes.
+
+The first idea would be easier to implement at first, but would probably be harder to maintain in the long run.
