@@ -1,4 +1,7 @@
-# Minimal Airflow Docker Compose deployment
+# Minimal Airflow Docker Compose Deployment
+
+## to be revised as an example
+
 ## Overview
 
 The application is based off of Docker Compose to fully deploy a functional Airflow environment.
